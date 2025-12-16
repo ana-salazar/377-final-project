@@ -98,7 +98,7 @@ Save a new favorite station.
 ## Future Development
 - Add user login
 - Improve mobile design
-- Add ZIP code search
+- Include all counties dynamically
 - Email alerts for water quality changes
 
 ## Project Info
