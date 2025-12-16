@@ -1,7 +1,7 @@
-// simple user ID
+// simple user ID (in real app, this would come from authentication)
 const userId = 'user123';
 
-// save favorite to database through API
+// save favorite to database via API
 async function saveFavorite(userId, siteData) {
     try {
         const response = await fetch('/api/favorites', {
@@ -33,14 +33,14 @@ async function saveFavorite(userId, siteData) {
     }
 }
 
-// load favorites from database through API
+// load favorites from database via API
 async function loadFavorites() {
     const favoritesContainer = document.getElementById('favoritesContainer');
     
     if (!favoritesContainer) return; // only run on home page
     
     try {
-        const response = await fetch(`/api/favorites/${userId}`);
+        const response = await fetch(`/api/favorites?userId=${userId}`);
         const data = await response.json();
         
         if (data.success && data.data && data.data.length > 0) {
@@ -90,7 +90,7 @@ async function removeFavorite(favoriteId, event) {
     if (!confirm('Remove this station from favorites?')) return;
     
     try {
-        const response = await fetch(`/api/favorites/${favoriteId}`, {
+        const response = await fetch(`/api/favorites?id=${favoriteId}`, {
             method: 'DELETE'
         });
         

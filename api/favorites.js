@@ -1,17 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
-// initialize supabase
+// initialize Supabase client
 const supabase = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_KEY
 );
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
+    // handle preflight requests
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
@@ -19,9 +20,16 @@ export default async function handler(req, res) {
     const { method } = req;
     
     try {
-        // get favorites for user
+        // GET /api/favorites?userId=xxx - Get all favorites for a user
         if (method === 'GET') {
-            const userId = req.query.userId || req.url.split('/').pop();
+            const userId = req.query.userId;
+            
+            if (!userId) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'userId is required'
+                });
+            }
             
             const { data, error } = await supabase
                 .from('favorites')
@@ -43,7 +51,7 @@ export default async function handler(req, res) {
             });
         }
         
-        // add new favorite
+        // POST /api/favorites - Add a new favorite
         if (method === 'POST') {
             const { user_id, site_id, site_name, latitude, longitude } = req.body;
             
@@ -89,9 +97,16 @@ export default async function handler(req, res) {
             });
         }
         
-        // remove favorite
+        // DELETE /api/favorites?id=xxx - Remove a favorite
         if (method === 'DELETE') {
-            const id = req.query.id || req.url.split('/').pop();
+            const id = req.query.id;
+            
+            if (!id) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'id is required'
+                });
+            }
             
             const { error } = await supabase
                 .from('favorites')
@@ -112,7 +127,7 @@ export default async function handler(req, res) {
             });
         }
         
-        // method not allowed
+        // Method not allowed
         return res.status(405).json({
             success: false,
             message: 'Method not allowed'
@@ -126,4 +141,4 @@ export default async function handler(req, res) {
             error: error.message
         });
     }
-}
+};
