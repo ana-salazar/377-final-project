@@ -1,8 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/api/favorites/:path*",
-      "destination": "/api/favorites.js"
-    }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
