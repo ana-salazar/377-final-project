@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/favorites.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/favorites/(.*)",
+      "dest": "/api/favorites.js"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "clearsource",
+  "version": "1.0.0",
+  "description": "ClearSource - Find Clean Water Near You",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["water", "quality", "usgs", "environment"],
+  "author": "Ana Salazar",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}
