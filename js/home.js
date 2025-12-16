@@ -69,9 +69,15 @@ async function searchStations(searchType, searchValue) {
         if (data.value && data.value.timeSeries && data.value.timeSeries.length > 0) {
             displayStations(data.value.timeSeries);
             results.classList.remove('hidden');
+            
+            // smooth scroll to results
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
         } else {
             stationsContainer.innerHTML = '<p class="no-favorites">No stations found for this location.</p>';
             results.classList.remove('hidden');
+            
+            // smooth scroll to results
+            results.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
     } catch (error) {
